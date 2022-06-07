@@ -15,10 +15,10 @@ const mockUpStrand = () => {
 
 const pAequorFactory = (num, dnaArr) => {
   return {
-    num: num,
-    dnaArr: dnaArr,
+    num,
+    dnaArr,
 
-    mutate(dnaArr) {
+    mutate() {
       console.log(`Before Mutation: ${this.dnaArr}`);
       const dnaBases = ["A", "T", "C", "G"];
       const pAequorBase = Math.floor(Math.random() * 15);
@@ -28,14 +28,45 @@ const pAequorFactory = (num, dnaArr) => {
         rndMutation();
         this.dnaArr.splice(pAequorBase, 1, rndMutation());
       } else {
-        console.log("Mutation!");
         this.dnaArr.splice(pAequorBase, 1, rndMutation());
       }
-      return console.log(`After Mutation: ${this.dnaArr}`);
+      console.log(`After Mutation: ${this.dnaArr}`);
+      return this.dnaArr;
     },
+
+    compareDNA(dnaArrToCompare) {
+      let counter = 0;
+      for(let i=0; i<this.dnaArr.length; i++ ){
+        if(this.dnaArr[i] === dnaArrToCompare[i]) counter++;
+      }
+      return console.log(`Specimen #1 and specimen #2 have ${Math.floor((counter/15)*100)}% DNA in common.`);
+    },
+    willLikelySurvive(){
+      let counter = 0;
+      let toPercentage;
+      for(let i = 0; i< this.dnaArr.length ; i++){
+        if(this.dnaArr[i] === 'C' || this.dnaArr[i] === 'G') counter++;
+      }
+      toPercentage = Math.floor((counter/15)*100);
+      if(toPercentage >= 60){
+        return true
+      } else {
+        return false
+      }
+    }
   };
 };
 
-const firstTest = pAequorFactory(1, mockUpStrand());
-firstTest.mutate();
-// console.log(pAequorFactory(1, mockUpStrand()));
+let the30Instances = [];
+let i=1;
+
+while(the30Instances.length < 30){
+  let newpAequor = pAequorFactory(i, mockUpStrand())
+
+  if(newpAequor.willLikelySurvive()){ 
+    the30Instances.push(newpAequor);
+    i++
+  }
+}
+
+console.log(the30Instances);
