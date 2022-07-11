@@ -4,7 +4,9 @@ import ReactDOM from 'react-dom';
 
 
 const title = '';
-const showBackground = false;
+const images =[]
+const showBackground = true;
+
 const background = (
   <img
     className='background' 
@@ -12,7 +14,7 @@ const background = (
     src='/images/ocean.jpg'
   />
 );
-const images =[]
+
 const displayFact = (e) =>{
   const animalClicked = e.target.alt;
   const animalInfo = animals[animalClicked]
@@ -21,6 +23,7 @@ const displayFact = (e) =>{
   const funFact = animalInfo.facts[randIndex];
   document.getElementById('fact').innerHTML = funFact;
 };
+
 for(const animal in animals){
   images.push((
     <img 
@@ -34,6 +37,7 @@ for(const animal in animals){
     />
   ))
 }
+
 const animalFacts = (
 <div>
   <h1>
